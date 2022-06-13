@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  redis:
+    container_name: 'redissenarauth'
+    image: 'redis:alpine'
+    command: redis-server --requirepass 123456
+    restart: 'always'
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redisdataauth:/data'
+
+  postgres:
+    container_name: 'pgsenarauth'
+    image: 'postgres:11'
+    environment:
+      POSTGRES_DB: pgsenarauth
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'pgdataauth:/var/lib/postgresql/data/'
+
+volumes:
+  pgdataauth:
+  redisdataauth:
